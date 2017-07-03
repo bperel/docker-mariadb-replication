@@ -22,7 +22,7 @@ check_slave_health () {
 }
 
 is_master_up () {
-  mysql -h master \
+  mysql -h $MASTER_HOST \
     -u $REPLICATION_USER \
     -p$REPLICATION_PASSWORD \
     -e "select 1" \
