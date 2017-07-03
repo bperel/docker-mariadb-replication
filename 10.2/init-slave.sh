@@ -21,8 +21,21 @@ check_slave_health () {
   return 0
 }
 
+is_master_up () {
+  mysql -h master \
+    -u $REPLICATION_USER \
+    -p$REPLICATION_PASSWORD \
+    -e "select 1" \
+    &>/dev/null
+}
 
-echo Updating master connetion info in slave.
+echo "Making sure master is responding"
+until is_master_up; do
+  echo "Master not responding; sleeping for a second."
+  sleep 1
+done
+
+echo Updating master connection info in slave.
 
 mysql -u root -e "RESET MASTER; \
   CHANGE MASTER TO \

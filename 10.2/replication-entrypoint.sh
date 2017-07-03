@@ -1,7 +1,9 @@
 #!/bin/bash
 set -eo pipefail
 
-cat > /etc/mysql/mysql.conf.d/repl.cnf << EOF
+conf_dir=/etc/mysql/mariadb.conf.d
+
+cat > ${conf_dir}/repl.cnf << EOF
 [mysqld]
 log-bin=mysql-bin
 relay-log=mysql-relay
@@ -38,9 +40,10 @@ mysql -u root -e "\
 EOF
 else
   # TODO: make server-id discoverable
-  export SERVER_ID=2
+  # get server id from IP
+  export SERVER_ID=`hostname -i | sed 's/[^0-9]*//g'`
   cp -v /init-slave.sh /docker-entrypoint-initdb.d/
-  cat > /etc/mysql/mysql.conf.d/repl-slave.cnf << EOF
+  cat > ${conf_dir}/repl-slave.cnf << EOF
 [mysqld]
 log-slave-updates
 master-info-repository=TABLE
@@ -49,7 +52,7 @@ relay-log-recovery=1
 EOF
 fi
 
-cat > /etc/mysql/mysql.conf.d/server-id.cnf << EOF
+cat > ${conf_dir}/server-id.cnf << EOF
 [mysqld]
 server-id=$SERVER_ID
 EOF

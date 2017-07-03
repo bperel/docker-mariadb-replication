@@ -1,4 +1,4 @@
-CREATE DATABASE test;
+CREATE DATABASE IF NOT EXISTS test;
 USE test;
-CREATE TABLE names(id INT AUTO_INCREMENT KEY, name VARCHAR(10));
-INSERT INTO names (name) VALUES ('test1'), ('test2');
+CREATE TABLE IF NOT EXISTS names(id varchar(36), insert_date datetime);
+INSERT INTO names (id, insert_date) VALUES (uuid(), NOW());

@@ -1,7 +1,11 @@
+Note: While anybody can use this (according to any potential upstream licenses), it's not _supported_ for public use.
+
+----
+
 Docker images to support implicit mysql replication support.
 
 Features:
-* based on official mysql images
+* based on official MariaDB images
 * when you start the slave, it starts with replication started,
 * no manual sync (mysqldump) is needed,
 * slave fails to start if replication not healthy
@@ -14,23 +18,29 @@ Additional environment variables:
 * MASTER_PORT [default: 3306]
 * MASTER_HOST [default: master]
 
-# Start master
+# Docker Compose
+
+`docker-compose up`
+
+# `docker run`
+
+## Start master
 
 ```
 docker run -d \
   --name mysql_master \
   -e MYSQL_ALLOW_EMPTY_PASSWORD=1 \
-  bergerx/mysql-replication:5.7
+  jamiejackson/mariadb-replication:5.7
 ```
 
-# Start slave
+## Start slave
 
 ```
 docker run -d \
   --name mysql_slave \
   -e MYSQL_ALLOW_EMPTY_PASSWORD=1 \
   --link mysql_master:master \
-  bergerx/mysql-replication:5.7
+  jamiejackson/mariadb-replication:5.7
 ```
 
 # Test the replication
