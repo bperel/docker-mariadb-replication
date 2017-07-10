@@ -22,10 +22,10 @@ services:
       - db_master:master
     restart: unless-stopped
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      #- MYSQL_ALLOW_EMPTY_PASSWORD=1
       - MASTER_HOST=master
       - MASTER_PORT=3306
-      # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   db_slave2:
     image: jamiejackson/mariadb-replication:10.2
@@ -38,7 +38,7 @@ services:
       - db_master:master
     restart: unless-stopped
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      #- MYSQL_ALLOW_EMPTY_PASSWORD=1
       - MASTER_HOST=master
       - MASTER_PORT=3306
-      # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
