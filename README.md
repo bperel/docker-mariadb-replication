@@ -22,7 +22,7 @@ Additional environment variables:
 
 `docker-compose up`
 
-# `docker run`
+# Docker Run
 
 ## Start master
 
