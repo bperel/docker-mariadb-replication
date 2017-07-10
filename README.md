@@ -46,5 +46,5 @@ docker run -d \
 # Test the replication
 ```
 cat 02-master-database.sql | docker exec -i mysql_master mysql
-docker exec -it mysql_slave mysql -e 'select * from test.names'
+docker exec -it mysql_slave mysql -e 'select * from test.test'
 ```
