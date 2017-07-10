@@ -66,11 +66,12 @@ mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "START SLAVE;"
 echo Initial health check:
 check_slave_health
 
-echo Waiting for health grace period and slave to be still healthy:
+echo "Waiting $REPLICATION_HEALTH_GRACE_PERIOD seconds for health grace period and slave to be still healthy:"
 sleep $REPLICATION_HEALTH_GRACE_PERIOD
 
 counter=0
 while ! check_slave_health; do
+  echo "Checking slave health: $counter"
   if (( counter >= $REPLICATION_HEALTH_TIMEOUT )); then
     echo ERROR: Replication not healthy, health timeout reached, failing.
 	break
